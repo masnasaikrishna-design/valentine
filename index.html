@@ -13,50 +13,63 @@
             height: 100vh;
             margin: 0;
             font-family: 'Arial', sans-serif;
-            background-color: #ffebee;
+            /* Entire background is now Pink */
+            background-color: #ffc0cb; 
             overflow: hidden;
         }
 
         h1 {
             color: #d32f2f;
-            font-size: 3rem;
-            margin-bottom: 20px;
+            font-size: 3.5rem;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px white;
         }
 
-        .buttons {
+        .buttons-container {
             display: flex;
-            gap: 70px;
+            /* Added 80px space between buttons */
+            gap: 80px; 
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100px;
         }
 
         button {
-            padding: 15px 30px;
-            font-size: 1.2rem;
+            padding: 15px 40px;
+            font-size: 1.5rem;
+            font-weight: bold;
             cursor: pointer;
             border: none;
-            border-radius: 10px;
-            transition: transform 0.2s;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.1s;
         }
 
         #yesBtn {
             background-color: #4caf50;
             color: white;
+            z-index: 1;
         }
 
         #noBtn {
-            background-color: #FF69B4;
-            color: hotpink;
-            position: absolute; /* Crucial for moving it around */
+            background-color: #ff0000; /* Red color */
+            color: white;
+            position: absolute;
+            /* Added transition so it glides away */
+            transition: all 0.2s ease; 
         }
 
         #gifContainer {
             display: none;
-            margin-top: 20px;
             text-align: center;
         }
 
         img {
-            max-width: 300px;
-            border-radius: 15px;
+            max-width: 350px;
+            border: 5px solid white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
     </style>
 </head>
@@ -64,14 +77,14 @@
 
     <div id="mainContent">
         <h1>Will you be my Valentine?</h1>
-        <div class="buttons">
+        <div class="buttons-container">
             <button id="yesBtn" onclick="showLove()">Yes</button>
             <button id="noBtn" onmouseover="moveButton()">No</button>
         </div>
     </div>
 
     <div id="gifContainer">
-        <h1>Yay! ❤️ See you soon!</h1>
+        <h1>Yay! ❤️ You're mine!</h1>
         <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZqZzR4eGZ4eGZ4eGZ4eGZ4eGZ4eGZ4eGZ4eGZ4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/lNyT8D8y187S/giphy.gif" alt="Happy Dance">
     </div>
 
@@ -79,13 +92,16 @@
         function moveButton() {
             const noBtn = document.getElementById('noBtn');
             
-            // Calculate random positions within the window
-            // Subtracting button dimensions so it doesn't go off-screen
-            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            // Calculate random positions within the visible viewport
+            const padding = 50; 
+            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
             
-            noBtn.style.left = `${x}px`;
-            noBtn.style.top = `${y}px`;
+            const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
+            
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
         }
 
         function showLove() {
